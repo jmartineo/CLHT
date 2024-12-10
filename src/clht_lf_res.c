@@ -100,6 +100,22 @@ clht_bucket_create()
   return bucket;
 }
 
+void clht_bucket_create_bmark(bucket_t* bucket)
+{
+  bucket = memalign(CACHE_LINE_SIZE, sizeof(bucket_t));
+  if (bucket == NULL)
+    {
+      return;
+    }
+
+  uint32_t j;
+  for (j = 0; j < KEY_BUCKT; j++)
+    {
+      bucket->snapshot = 0;
+      bucket->key[j] = 0;
+    }
+}
+
 clht_hashtable_t* clht_hashtable_create(uint64_t num_buckets);
 
 clht_t* 
@@ -122,6 +138,59 @@ clht_create(uint64_t num_buckets)
   w->ht_oldest = w->ht;
 
   return w;
+}
+
+void clht_create_bmark(clht_t* w, uint64_t num_buckets)
+{
+
+  w->ht = clht_hashtable_create(num_buckets);
+
+  w->resize_lock = 0;
+  w->gc_lock = 0;
+  w->status_lock = 0;
+  w->version_list = NULL;
+  w->version_min = 0;
+  w->ht_oldest = w->ht;
+}
+
+void clht_hashtable_create_bmark(clht_hashtable_t* hashtable, uint64_t num_buckets)
+{
+  if (num_buckets == 0)
+    {
+      return;
+    }
+
+  hashtable = (clht_hashtable_t*) memalign(CACHE_LINE_SIZE, sizeof(clht_hashtable_t));
+  if (hashtable == NULL)
+    {
+      return;
+    }
+
+  hashtable->table = (bucket_t*) memalign(CACHE_LINE_SIZE, num_buckets * (sizeof(bucket_t)));
+  if (hashtable->table == NULL)
+    {
+      free(hashtable);
+      return;
+    }
+
+  memset((void*) hashtable->table, 0, num_buckets * (sizeof(bucket_t)));
+
+  uint64_t i;
+  for (i = 0; i < num_buckets; i++)
+    {
+      uint32_t j;
+      for (j = 0; j < ENTRIES_PER_BUCKET; j++)
+  {
+    hashtable->table[i].snapshot = 0;
+    hashtable->table[i].key[j] = 0;
+  }
+    }
+
+  hashtable->num_buckets = num_buckets;
+  hashtable->hash = num_buckets - 1;
+
+  hashtable->table_new = NULL;
+  hashtable->table_prev = NULL;
 }
 
 clht_hashtable_t* 

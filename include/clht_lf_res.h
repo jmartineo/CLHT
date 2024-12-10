@@ -239,7 +239,6 @@ inline uint64_t __ac_Jenkins_hash_64(uint64_t key);
 /* Hash a key for a particular hashtable. */
 uint64_t clht_hash(clht_hashtable_t* hashtable, clht_addr_t key );
 
-
 static inline int
 snap_get_empty_index(uint64_t snap)
 {
@@ -338,6 +337,13 @@ _mm_pause_rep(uint64_t w)
 /* Create a new hashtable. */
 clht_hashtable_t* clht_hashtable_create(uint64_t num_buckets);
 clht_t* clht_create(uint64_t num_buckets);
+
+/* Creates a new hashtable without memory allocation. */
+void clht_bucket_create_bmark(bucket_t* bucket);
+
+void clht_create_bmark(clht_t* w, uint64_t num_buckets);
+
+void clht_hashtable_create_bmark(clht_hashtable_t* hashtable, uint64_t num_buckets);
 
 /* Insert a key-value pair into a hashtable. */
 int clht_put(clht_t* hashtable, clht_addr_t key, clht_val_t val);
