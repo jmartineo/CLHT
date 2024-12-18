@@ -34,7 +34,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <inttypes.h>
-#include "atomic_ops.h"
+#include "clht_atomic_ops.h"
 #include "utils.h"
 
 #include "ssmem.h"

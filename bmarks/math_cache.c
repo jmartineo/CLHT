@@ -47,7 +47,7 @@
 #include <unistd.h>
 #include <malloc.h>
 #include "utils.h"
-#include "atomic_ops.h"
+#include "clht_atomic_ops.h"
 #ifdef __sparc__
 #  include <sys/types.h>
 #  include <sys/processor.h>

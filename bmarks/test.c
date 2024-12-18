@@ -47,7 +47,7 @@
 #include <unistd.h>
 #include <malloc.h>
 #include "utils.h"
-#include "atomic_ops.h"
+#include "clht_atomic_ops.h"
 #ifdef __sparc__
 #  include <sys/types.h>
 #  include <sys/processor.h>
@@ -214,6 +214,8 @@ test(void* thread)
     
   barrier_cross(&barrier);
 
+	seeds = seed_rand();
+
   uint64_t key;
   uint64_t scale_rem = (uint64_t) (update_rate * ((uint64_t) -1));
   uint64_t scale_put = (uint64_t) (put_rate * ((uint64_t) -1));
@@ -287,6 +289,9 @@ test(void* thread)
   char* obj = NULL;
   
   barrier_cross(&barrier_global);
+
+  // Define c
+  uint32_t c;
 
   while (stop == 0) 
     {

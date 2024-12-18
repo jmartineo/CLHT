@@ -1,8 +1,8 @@
 /*   
- *   File: atomic_ops.h
+ *   File: clht_atomic_ops.h
  *   Author: Tudor David <tudor.david@epfl.ch>
  *   Description: 
- *   atomic_ops.h is part of ASCYLIB
+ *   clht_atomic_ops.h is part of ASCYLIB
  *
  * The MIT License (MIT)
  *
@@ -29,7 +29,7 @@
  */
 
 /*
- *  File: atomic_ops.h
+ *  File: clht_atomic_ops.h
  *  Author: Tudor David
  *
  *  Created on: December 06, 2012
@@ -37,8 +37,8 @@
  *  Description: 
  *      Cross-platform atomic operations
  */
-#ifndef _ATOMIC_OPS_H_INCLUDED_
-#define _ATOMIC_OPS_H_INCLUDED_
+#ifndef CLHT_ATOMIC_OPS_H
+#define CLHT_ATOMIC_OPS_H
 
 #include <inttypes.h>
 
